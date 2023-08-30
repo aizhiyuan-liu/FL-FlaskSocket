@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Federated Learning Client</title>
+</head>
+<body>
+    <h1>Federated Learning Client</h1>
+
+    <form method="POST" action="/train_local_model">
+        
+        <label for="data">Local Training Data:</label><br>
+        <input type="text" id="data" name="data" required><br><br>
+        <label for="data">Epochs</label><br>
+        <input type="text" id="epoch" name="epoch" required><br><br>
+        <input type="submit" value="Train Local Model">
+    </form>
+    <p id="response"></p>
+    <hr>
+    <form method="POST" action="/update">
+        <label for="weight">Client Dataset Weight:</label><br>
+        <input type="number" id="weight" name="weight" step="0.01"><br><br>
+        <label for="update">Local Model Update (comma-separated values):</label><br>
+        <textarea id="update" name="update" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Submit Update">
+    </form>
+</body>
+<script>
+    const form = document.getElementById('train-form');
+    const responseElement = document.getElementById('response');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const data = form.elements.data.value;
+
+        // Send a POST request to train_local_model endpoint
+        const response = await fetch('/train_local_model', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"data":data})
+        });
+
+        const result = await response.json();
+        responseElement.textContent = result.message;
+    });
+</script>
+</html>

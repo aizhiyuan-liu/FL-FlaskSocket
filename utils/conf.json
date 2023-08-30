@@ -1,0 +1,12 @@
+{
+	"csv_file_data":"./data/train_a_label.csv",
+	"model_name" : "FNN",
+	
+	"no_models" : 10,
+	
+	"type" : "cifar",
+	
+	"global_epochs" : 20000,
+	
+	"local_epochs" : 3
+}
